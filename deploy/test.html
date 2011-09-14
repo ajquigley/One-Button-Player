@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>Test for HTML5 Audio Element Support | Interactive Development by Brian Hadaway</title>
+        
+        <script src="js/jquery-1.4.2.js"></script>
+        <script>
+            $(document).ready(function(){
+                
+                var types = [{'name':'OGG','codec':'audio/ogg; codecs="vorbis"'},
+                             {'name':'MP3','codec':'audio/mpeg'},
+                             {'name':'AAC','codec':'audio/mp4; codecs="mp4a.40.2"'},
+                             {'name':'WAV','codec':'audio/wav; codecs="1"'},
+                             {'name':'PCM','codec':'audio/webm; codecs="vorbis"'}];
+                
+                function canPlay(type) {
+                    var cpt = document.createElement('audio').canPlayType(type);
+                    return type + " : <strong class='" + cpt + "'>" + (cpt == "" ? "no" : cpt) + "</strong><br />";
+                }
+                
+                function init() {
+                    var results = [];
+                    
+                    if(!document.createElement('audio').canPlayType) 
+                        return $("#results").append("<h2>Your browser DOES NOT support the HTML5 audio element. Boo!</h2>");
+                    
+                    results.push("<h2>Yay! Your browser supports the HTML5 audio element.</h2>"); 
+                    
+                    results.push('<dl>');
+                    for(var i = 0; i < types.length; i++)
+                    {
+                        results.push('<dt>' + types[i].name + '</dt>')
+                        results.push('<dd>' + canPlay(types[i].codec) + '</dd>');
+                    }
+                    results.push('</dl>');
+                    
+                    $("#results").append(results.join(""));
+                }
+                
+                init();
+            });
+        </script>
+        
+        <style>
+            
+            dt {
+                float:          left;
+                font-weight:    bold;
+            }
+            
+            dd {
+                margin-bottom:  5px;
+            }
+            
+            strong {
+                color:  #a31700;
+            }
+        
+            .probably {
+                color:  #0b5901;
+            }
+            
+            .maybe {
+                color:  #f9d544;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="results"></div>
+        <p>Back to <a href="http://www.brianhadaway.com/blog">Brian Hadaway's Blog</a></p>
+        <!--Google Analytics-->
+        <script type="text/javascript">
+        	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+        	try {
+        		var pageTracker = _gat._getTracker("UA-797386-7");
+        		pageTracker._trackPageview();
+        	} catch(err) {}
+        </script>
+    </body>
+</html>
